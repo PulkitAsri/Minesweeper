@@ -1,11 +1,13 @@
 import React from 'react'
 
-function Cell({info}) {
+function Cell({info,updateFlag,revealCell}) {
     return (
-        <div style={style.cellStyle}
-        onClick={()=>console.log(info)}
+        <div 
+        style={style.cellStyle}
+        onClick={(e)=>revealCell(e,info.x,info.y) }
+        onContextMenu={(e)=>updateFlag(e,info.x,info.y)}
         >
-            <span>{info.value + "\t"}</span>
+            <span>{info.revealed  ?  (info.value!==0)&&info.value  :"" }</span>
         </div>
         );
 }

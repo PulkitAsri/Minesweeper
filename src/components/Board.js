@@ -9,30 +9,51 @@ function Board() {
     useEffect(() => {
         //creating a fresh board
         const freshBoard = () => {
-            const newBoard=createBoard(5,5,10);
-            console.log(newBoard);
-            setGrid(newBoard);
+            const newBoard=createBoard(10,10,20);
+            console.log(newBoard.board);
+            setGrid(newBoard.board);
         }
         freshBoard();
     }, []);
 
-    if(!grid.board) return(<div>Loading</div>);
+    //Right Click
+    const updateFlag= (e,x,y) =>{
+        e.preventDefault();
+        
 
+        let updatedGrid=JSON.parse(JSON.stringify(grid));
+        updatedGrid[x][y].flagged=true;
+        setGrid(updatedGrid);
+    }
+
+    //Left Click
+    const revealCell= (e,x,y) =>{
+        e.preventDefault();
+        if(grid[x][y].value==="X") alert ("Mine Found");
+
+        let updatedGrid=JSON.parse(JSON.stringify(grid));
+        updatedGrid[x][y].revealed=true;
+        setGrid(updatedGrid);
+    }
+
+
+
+
+    if(!grid) return(<div>Loading</div>);
     return(
     <div>
-        {grid.board.map((row) =>{
+        {grid.map((row,r) =>{
             return(
-            <div style={{display:"flex"}}>
-            {row.map((cell)=>{
+            <div style={{display:"flex"}} key={r}>
+            {row.map((cell,c)=>{
                 return(
-                <Cell info={cell} />);
+                <Cell info={cell} revealCell={revealCell} updateFlag={updateFlag} key={c}/>);
                 })}
             </div>)
             })
         }
     </div>);
 
-    
 }
 
 export default Board;
