@@ -17,7 +17,8 @@ export default (row,col,bombs)=>{
         }
         board.push(row);
     }
-    printBoard();
+
+
     //Randomizing Bombs
     let bombCount=0;
     while(bombCount<bombs){
@@ -34,8 +35,6 @@ export default (row,col,bombs)=>{
         }
 
     }
-    printBoard();
-    
     
 
     //Adding Numbers to the grid 
@@ -58,18 +57,12 @@ export default (row,col,bombs)=>{
     }
 
     printBoard();
-
-    return { board,mineLocations };
-
-
     function printBoard(){
         console.log("Heres your Board!==>");
         for(let i=0;i<row;i++){
             console.log((board[i].map((item,index)=> item.value )));
         }
-
     }
-    
 
-
+    return { board , mineLocations };
 }
