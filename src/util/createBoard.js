@@ -1,4 +1,5 @@
 export default (row,col,bombs)=>{
+    const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
     let board=[];
     let mineLocations=[];
 
@@ -16,8 +17,8 @@ export default (row,col,bombs)=>{
         }
         board.push(row);
     }
-
-    //randomizing bombs
+    printBoard();
+    //Randomizing Bombs
     let bombCount=0;
     while(bombCount<bombs){
 
@@ -28,20 +29,47 @@ export default (row,col,bombs)=>{
         if(board[x][y].value===0){
             //if the cell didnt already have a bomb
             board[x][y].value="X";
-            mineLocations.push(x,y);
+            mineLocations.push([x,y]);
             bombCount++;
         }
 
     }
-    const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
+    printBoard();
+    
+    
 
     //Adding Numbers to the grid 
     for(let i=0;i<row;i++){
         for(let j=0;j<col;j++){
-            
-
+            //for each Bomb
+            if(board[i][j].value==="X"){
+                //all surround cells
+                VECTORS.forEach((v)=>{
+                    let surrX=i+v[0];
+                    let surrY=j+v[1];
+                    if(surrX >=0 && surrY >=0 
+                        && surrX < row && surrY < col 
+                        && board[surrX][surrY].value!=="X"){
+                        board[surrX][surrY].value++; 
+                    }
+                });
+            }
         }
     }
+
+    printBoard();
+
+    return { board,mineLocations };
+
+
+    function printBoard(){
+        console.log("Heres your Board!==>");
+        for(let i=0;i<row;i++){
+            console.log((board[i].map((item,index)=> item.value )));
+        }
+
+    }
     
+
 
 }
