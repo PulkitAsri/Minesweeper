@@ -9,12 +9,14 @@ const BOMBS=5;
 
 function Board() {
     const [grid,setGrid]= useState([]);
+    const [mineLoctions,setMineLocations]= useState([]);
 
     //First Mount
     useEffect(() => {
         //creating a fresh board
         const freshBoard = () => {
             const newBoard=createBoard(ROW,COL,BOMBS);
+            setMineLocations(newBoard.mineLocations);
             console.log(newBoard.board);
             setGrid(newBoard.board);
         }
@@ -49,11 +51,11 @@ function Board() {
         // let updatedGrid=JSON.parse(JSON.stringify(grid));
         // updatedGrid[x][y].revealed=true;
         // setGrid(updatedGrid);
-        
     
         let updatedGrid=JSON.parse(JSON.stringify(revealCell(grid,x,y)));
 
         printGrid(updatedGrid);
+        
         setGrid(updatedGrid);
     }
 
@@ -70,7 +72,10 @@ function Board() {
 
         //BOOM
         if(arr[x][y].value === "X") {
-            alert ("Mine Found");
+            for(let mine=0 ; mine<mineLoctions.length ; mine++){
+                arr[mineLoctions[mine][0]][mineLoctions[mine][1]].revealed=true;
+            }
+            
             return arr;
         }
 
@@ -84,7 +89,7 @@ function Board() {
     }
 
     const floodReveal= (arr,x,y) =>{
-        VECTORS.forEach((v,vindex)=>{
+        VECTORS.forEach((v)=>{
             let surrX= x + v[0];
             let surrY= y + v[1];
             if(surrX >=0 && surrY >=0 
@@ -104,8 +109,6 @@ function Board() {
             }
         });
     }
-
-
 
 
     if(!grid) return(<div>Loading</div>);

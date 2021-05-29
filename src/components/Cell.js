@@ -1,9 +1,17 @@
 import React from 'react'
+import valueColor from "../util/valueColor"
+import "../App.css"
 
 function Cell({info,updateFlag,handleRevealCell}) {
+    const style={
+        background: info.revealed ? "silver" :"grey",
+        color: valueColor(info.value)
+    }
+
     return (
         <div 
-        style={style.cellStyle}
+        style={style}
+        className="cellStyle"
         onClick={(e)=>handleRevealCell(e,info.x,info.y) }
         onContextMenu={(e)=>updateFlag(e,info.x,info.y)}
         >
@@ -12,17 +20,5 @@ function Cell({info,updateFlag,handleRevealCell}) {
         );
 }
 
-const style={
-    cellStyle:{
-        width: 40,
-        height: 40,
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center",
-        background:"lightgrey",
-        border: "2px solid"
-    }
-
-}
 
 export default Cell
