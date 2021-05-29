@@ -7,7 +7,7 @@ function Cell({info,updateFlag,handleRevealCell}) {
         onClick={(e)=>handleRevealCell(e,info.x,info.y) }
         onContextMenu={(e)=>updateFlag(e,info.x,info.y)}
         >
-            <span>{info.revealed  ? ( info.value!==0)&& info.value :"" }</span>
+            <span>{ info.revealed ? (info.value!==0)&&info.value :"" }</span>
         </div>
         );
 }
@@ -19,7 +19,7 @@ const style={
         display:"flex",
         justifyContent:"center",
         alignItems:"center",
-        background:"yellow",
+        background:"lightgrey",
         border: "2px solid"
     }
 

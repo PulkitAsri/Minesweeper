@@ -3,9 +3,9 @@ import createBoard from '../util/createBoard';
 import Cell from './Cell';
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
-const ROW=10;
-const COL=10;
-const BOMBS=20;
+const ROW=5;
+const COL=5;
+const BOMBS=5;
 
 function Board() {
     const [grid,setGrid]= useState([]);
@@ -21,10 +21,11 @@ function Board() {
         freshBoard();
     }, []);
 
-    function printGrid(){
+
+    function printGrid(arr){
         console.log("Heres your Board!==>");
         for(let i=0;i<ROW;i++){
-            console.log((grid[i].map((item,index)=> item.revealed )));
+            console.log((arr[i].map((item,index)=> item.value+(item.revealed ?"|TR" :" fa"))));
         }
     }
 
@@ -37,58 +38,69 @@ function Board() {
         let updatedGrid=JSON.parse(JSON.stringify(grid));
         updatedGrid[x][y].flagged=true;
         setGrid(updatedGrid);
+
+        
     }
 
     //Left Click
     const handleRevealCell = (e,x,y) =>{
         e.preventDefault();
 
-        let updatedGrid=JSON.parse(JSON.stringify(grid));
-        updatedGrid[x][y].revealed=true;
-        setGrid(updatedGrid);
-
-        revealCell(x,y);
+        // let updatedGrid=JSON.parse(JSON.stringify(grid));
+        // updatedGrid[x][y].revealed=true;
+        // setGrid(updatedGrid);
         
+    
+        let updatedGrid=JSON.parse(JSON.stringify(revealCell(grid,x,y)));
+
+        printGrid(updatedGrid);
+        setGrid(updatedGrid);
     }
 
-    const revealCell = (x,y) =>{
+    const revealCell = (arr,x,y) =>{
+        console.log(x+" "+y);
+        
 
-        if(grid[x][y].revealed === true){
+        if(arr[x][y].revealed === true){
             console.log("checkRevealed");
-            return;
-        } ;
+            return arr;
+        } 
 
-        console.log(x+" "+y+" "+grid[x][y].revealed +" "+grid[x][y].value);
+        arr[x][y].revealed=true;
 
         //BOOM
-        if(grid[x][y].value === "X") {
+        if(arr[x][y].value === "X") {
             alert ("Mine Found");
+            return arr;
         }
 
         //KHOKHLA
         if(grid[x][y].value === 0){
-            floodReveal(x,y);
+            return arr=floodReveal(arr,x,y) ;
         }
+        
+
+
     }
 
-    const floodReveal= (x,y) =>{
+    const floodReveal= (arr,x,y) =>{
         VECTORS.forEach((v,vindex)=>{
             let surrX= x + v[0];
             let surrY= y + v[1];
             if(surrX >=0 && surrY >=0 
                 && surrX < ROW && surrY < COL 
-                && grid[surrX][surrY].value!=="X"
-                && !grid[surrX][surrY].revealed ){
+                && arr[surrX][surrY].value!=="X"
+                && !arr[surrX][surrY].revealed ){
+
+                    console.log('flood Filling'+surrX+" "+surrY);
                     
 
                 //recursive Call to reveal Cell
-                let updatedGrid=JSON.parse(JSON.stringify(grid));
-                updatedGrid[x][y].revealed=true;
-                setGrid(updatedGrid);
-                setTimeout(revealCell(surrX,surrY) ,100);
-
-                
-                
+                // let updatedGrid=JSON.parse(JSON.stringify(grid));
+                arr[x][y].revealed=true;
+                return revealCell(arr,surrX,surrY);
+                // setGrid(updatedGrid);
+                // setTimeout(revealCell(surrX,surrY) ,100); 
             }
         });
     }
