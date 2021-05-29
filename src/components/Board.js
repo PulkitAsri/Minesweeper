@@ -3,9 +3,9 @@ import createBoard from '../util/createBoard';
 import Cell from './Cell';
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
-const ROW=5;
-const COL=5;
-const BOMBS=5;
+const ROW=10;
+const COL=10;
+const BOMBS=15;
 
 function Board() {
     const [grid,setGrid]= useState([]);
@@ -75,7 +75,7 @@ function Board() {
             for(let mine=0 ; mine<mineLoctions.length ; mine++){
                 arr[mineLoctions[mine][0]][mineLoctions[mine][1]].revealed=true;
             }
-            
+
             return arr;
         }
 

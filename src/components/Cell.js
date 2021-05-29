@@ -1,10 +1,11 @@
 import React from 'react'
 import valueColor from "../util/valueColor"
+import mineColor from "../util/mineColor"
 import "../App.css"
 
 function Cell({info,updateFlag,handleRevealCell}) {
     const style={
-        background: info.revealed ? "silver" :"grey",
+        background: info.revealed ? (info.value ==="X" ? mineColor() :"silver") :"grey",
         color: valueColor(info.value)
     }
 
