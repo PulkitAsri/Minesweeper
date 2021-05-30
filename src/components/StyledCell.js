@@ -7,6 +7,7 @@ export default styled.div`
     justify-content:center;
     align-items:center;
     border: 2px solid white;
+    user-select: none;
     
 `;
 

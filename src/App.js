@@ -1,11 +1,12 @@
 import React from 'react';
 import Board from './components/Board';
+import StyledHeading from './components/StyledHeading';
 
 
 function App() {
   return (
-    <div>
-      <h1>Minesweeper</h1>
+    <div >
+      <StyledHeading>Minesweeper</StyledHeading>
       <Board />
     </div>
   );

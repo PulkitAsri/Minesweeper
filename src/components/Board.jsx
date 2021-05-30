@@ -1,15 +1,15 @@
 import React ,{ useState,useEffect }from 'react'
 import createBoard from '../util/createBoard';
 import Cell from './Cell';
-import StyledBoard from "./StyledBoard"
+import BorderWrapper from "./BorderWrapper"
 import _ from "lodash";
 import { printGrid ,printBoard } from "../util/debugging"
 
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
-const ROW=10;
-const COL=10;
-const BOMBS=15;
+const ROW=15;
+const COL=20;
+const BOMBS=40;
 
 function Board() {
     const [grid,setGrid]= useState([]);
@@ -34,15 +34,21 @@ function Board() {
         e.preventDefault(); //avoiding menu 
 
         let newGrid=[...grid]; //deep copy
-        newGrid[x][y].flagged=true;
+        newGrid[x][y].flagged=!newGrid[x][y].flagged;
         setGrid(newGrid);
     }
 
     //Left Click
     const handleRevealCell = (x,y) =>{
-
         let newGrid=[...grid]; //deep copy
-        revealCell(newGrid,x,y); 
+
+        //avoid the click on flagged cells
+        if(newGrid[x][y].flagged){ 
+            newGrid[x][y].flagged=false;
+        }else{
+           revealCell(newGrid,x,y);  
+        }
+
         setGrid(newGrid);
     }
 
@@ -99,10 +105,11 @@ function Board() {
         return(<div>Loading</div>);
 
     return(
-    <StyledBoard>
+    <BorderWrapper>
+    <div>
         {grid.map((row,r) =>{
             return(
-            <div key={r} >
+            <div style={{display:"flex"}} key={r} >
             {row.map((cell,c)=>{
                 return(<Cell 
                         key={c} 
@@ -112,8 +119,9 @@ function Board() {
                 })
             }
             </div>);
-        })} 
-    </StyledBoard>);
+        })}
+        </div> 
+    </BorderWrapper>);
 }
 
 export default Board;
