@@ -1,3 +1,5 @@
+import {printBoard} from "./debugging";
+
 export default (row,col,bombs)=>{
     const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
     let board=[];
@@ -56,13 +58,7 @@ export default (row,col,bombs)=>{
         }
     }
 
-    printBoard();
-    function printBoard(){
-        console.log("Heres your Board!==>");
-        for(let i=0;i<row;i++){
-            console.log((board[i].map((item,index)=> item.value )));
-        }
-    }
-
+    printBoard(board,row,col);
+    
     return { board , mineLocations };
 }
