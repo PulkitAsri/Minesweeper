@@ -18,7 +18,9 @@ function Cell({info,updateFlag,handleRevealCell}) {
         >
         { 
             info.revealed 
-            ?(info.value!==0)&&info.value 
+            ?(info.value==="X")
+                ?"💣"
+                :(info.value!==0)&&info.value 
             :(info.flagged)
                 ?"🔴"
                 :""      

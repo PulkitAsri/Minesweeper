@@ -51,20 +51,16 @@ function Board() {
 
         //deep copy of grid
         let rrrr=[...grid];
-
         revealCell(rrrr,x,y);
-
-        printGrid(rrrr);
-        
         setGrid(rrrr);
     }
 
     const revealCell = (arr,x,y) =>{
         console.log(x+" "+y);
         
-
         if(arr[x][y].revealed === true){
             console.log("Already Revealed"); 
+            return;
         } 
 
         arr[x][y].revealed=true;
@@ -75,7 +71,6 @@ function Board() {
                 arr[mineLoctions[mine][0]][mineLoctions[mine][1]].revealed=true;
             }
 
-            
         }
 
         //KHOKHLA
@@ -87,6 +82,7 @@ function Board() {
     }
 
     const floodReveal= (arr,x,y) =>{
+        
         VECTORS.forEach((v)=>{
             let surrX= x + v[0];
             let surrY= y + v[1];
@@ -97,6 +93,8 @@ function Board() {
 
                 console.log('flood Filling'+surrX+" "+surrY);
                 arr[x][y].revealed=true;
+
+                //Recursive Call for each of its neighbours
                 return revealCell(arr,surrX,surrY);
             }
         });
