@@ -23,7 +23,7 @@ export default (row,col,bombs)=>{
 
     //Randomizing Bombs
     let bombCount=0;
-    while(bombCount<bombs){
+    while(bombCount < bombs){
 
         //while loop to avoid overlap of bombs
         let x=Math.floor(Math.random()*row);
@@ -35,29 +35,24 @@ export default (row,col,bombs)=>{
             mineLocations.push([x,y]);
             bombCount++;
         }
-
     }
     
 
-    //Adding Numbers to the grid 
-    for(let i=0;i<row;i++){
-        for(let j=0;j<col;j++){
-            //for each Bomb
-            if(board[i][j].value==="X"){
-                //all surround cells
-                VECTORS.forEach((v)=>{
-                    let surrX=i+v[0];
-                    let surrY=j+v[1];
-                    if(surrX >=0 && surrY >=0 
-                        && surrX < row && surrY < col 
-                        && board[surrX][surrY].value!=="X"){
-                        board[surrX][surrY].value++; 
-                    }
-                });
+    //Adding Number Around The Bombs
+    mineLocations.forEach((mine)=>{
+        //all surround cells
+        VECTORS.forEach((v)=>{
+            let surrX=mine[0]+v[0];
+            let surrY=mine[1]+v[1];
+            if(surrX >=0 && surrY >=0 
+                && surrX < row && surrY < col 
+                && board[surrX][surrY].value!=="X"){
+                board[surrX][surrY].value++; 
             }
-        }
-    }
-
+        });
+    });
+    
+                
     printBoard(board,row,col);
     
     return { board , mineLocations };
