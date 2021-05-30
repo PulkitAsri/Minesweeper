@@ -13,13 +13,20 @@ function Cell({info,updateFlag,handleRevealCell}) {
         <div 
         style={style}
         className="cellStyle"
-        onClick={(e)=>handleRevealCell(e,info.x,info.y) }
+        onClick={()=>handleRevealCell(info.x,info.y) }
         onContextMenu={(e)=>updateFlag(e,info.x,info.y)}
         >
-            <span>{ info.revealed ? (info.value!==0)&&info.value :"" }</span>
+        { 
+            info.revealed 
+            ?(info.value!==0)&&info.value 
+            :(info.flagged)
+                ?"🔴"
+                :""      
+        }
+        
         </div>
         );
 }
-
+// possoible Emojis🎯🕹🧨💣⚔️📌📍♨️💢🛑🔴🟥🚩⛳️
 
 export default Cell

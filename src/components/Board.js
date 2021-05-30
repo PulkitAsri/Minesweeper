@@ -1,6 +1,7 @@
 import React ,{ useState,useEffect }from 'react'
 import createBoard from '../util/createBoard';
 import Cell from './Cell';
+import _ from "lodash";
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const ROW=10;
@@ -22,8 +23,9 @@ function Board() {
         }
         freshBoard();
     }, []);
+    
 
-
+    //debugging function
     function printGrid(arr){
         console.log("Heres your Board!==>");
         for(let i=0;i<ROW;i++){
@@ -45,18 +47,16 @@ function Board() {
     }
 
     //Left Click
-    const handleRevealCell = (e,x,y) =>{
-        e.preventDefault();
+    const handleRevealCell = (x,y) =>{
 
-        // let updatedGrid=JSON.parse(JSON.stringify(grid));
-        // updatedGrid[x][y].revealed=true;
-        // setGrid(updatedGrid);
-    
-        let updatedGrid=JSON.parse(JSON.stringify(revealCell(grid,x,y)));
+        //deep copy of grid
+        let rrrr=[...grid];
 
-        printGrid(updatedGrid);
+        revealCell(rrrr,x,y);
+
+        printGrid(rrrr);
         
-        setGrid(updatedGrid);
+        setGrid(rrrr);
     }
 
     const revealCell = (arr,x,y) =>{
@@ -64,8 +64,7 @@ function Board() {
         
 
         if(arr[x][y].revealed === true){
-            console.log("checkRevealed");
-            return arr;
+            console.log("Already Revealed"); 
         } 
 
         arr[x][y].revealed=true;
@@ -76,16 +75,15 @@ function Board() {
                 arr[mineLoctions[mine][0]][mineLoctions[mine][1]].revealed=true;
             }
 
-            return arr;
+            
         }
 
         //KHOKHLA
         if(grid[x][y].value === 0){
-            return arr=floodReveal(arr,x,y) ;
+            return floodReveal(arr,x,y) ;
         }
-        
 
-
+        return arr;
     }
 
     const floodReveal= (arr,x,y) =>{
@@ -93,19 +91,13 @@ function Board() {
             let surrX= x + v[0];
             let surrY= y + v[1];
             if(surrX >=0 && surrY >=0 
-                && surrX < ROW && surrY < COL 
-                && arr[surrX][surrY].value!=="X"
-                && !arr[surrX][surrY].revealed ){
+            && surrX < ROW && surrY < COL 
+            && arr[surrX][surrY].value!=="X"
+            && !arr[surrX][surrY].revealed ){
 
-                    console.log('flood Filling'+surrX+" "+surrY);
-                    
-
-                //recursive Call to reveal Cell
-                // let updatedGrid=JSON.parse(JSON.stringify(grid));
+                console.log('flood Filling'+surrX+" "+surrY);
                 arr[x][y].revealed=true;
                 return revealCell(arr,surrX,surrY);
-                // setGrid(updatedGrid);
-                // setTimeout(revealCell(surrX,surrY) ,100); 
             }
         });
     }
