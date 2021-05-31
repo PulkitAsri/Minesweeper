@@ -3,39 +3,83 @@ import createBoard from '../util/createBoard';
 import Cell from './Cell';
 import BorderWrapper from "./BorderWrapper"
 import _ from "lodash";
-import { printGrid ,printBoard } from "../util/debugging"
+
+import ScoreCard from './ScoreCard';
+
 
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
-const ROW=15;
-const COL=20;
-const BOMBS=40;
+const LEVELS={
+    EASY:{
+        ROW:10,
+        COL:10,
+        BOMBS:20
+    },
+    MEDIUM:{
+        ROW:12,
+        COL:12,
+        BOMBS:30
+    },
+    HARD:{
+        ROW:15,
+        COL:15,
+        BOMBS:40
+    }
+}
+// const ROW=15;
+// const COL=20;
+// const BOMBS=40;
 
 function Board() {
     const [grid,setGrid]= useState([]);
     const [mineLoctions,setMineLocations]= useState([]);
+    const [gameLevel,setGameLevel]=useState({
+        ROW:10,
+        COL:10,
+        BOMBS:20
+    })
+    const [noOfFlags,setNoOfFlags]=useState(gameLevel.BOMBS);
 
     //FIRST MOUNT
     useEffect(() => {
-        //creating a fresh board
-        const freshBoard = () => {
-            const newBoard=createBoard(ROW,COL,BOMBS);
-            setMineLocations(newBoard.mineLocations);
-            
-            setGrid(newBoard.board);
-            // printGrid(newBoard.board,ROW,COL);
-        }
         freshBoard();
+        
     }, []);
+
+    //Whenever GameLevel Changes
+    useEffect(()=>{
+        freshBoard();
+
+    },[gameLevel]);
+
+
+
+
     
+    //NEW BOARD
+    const freshBoard = () => {
+        const newBoard=createBoard(gameLevel.ROW,gameLevel.COL,gameLevel.BOMBS);
+        setMineLocations(newBoard.mineLocations);
+        setNoOfFlags(gameLevel.BOMBS);
+        setGrid(newBoard.board);
+        // printGrid(newBoard.board,gameLevel.ROW,gameLevel.COL);
+    }
+
+    //OPERATIONS
 
     //Right Click
     const handleUpdateFlag= (e,x,y) =>{
         e.preventDefault(); //avoiding menu 
 
         let newGrid=[...grid]; //deep copy
+        if(newGrid[x][y].flagged){
+            setNoOfFlags(noOfFlags+1);
+        }else{
+            setNoOfFlags(noOfFlags-1);
+        }
         newGrid[x][y].flagged=!newGrid[x][y].flagged;
         setGrid(newGrid);
+
     }
 
     //Left Click
@@ -45,6 +89,8 @@ function Board() {
         //avoid the click on flagged cells
         if(newGrid[x][y].flagged){ 
             newGrid[x][y].flagged=false;
+            setNoOfFlags(noOfFlags+1);
+
         }else{
            revealCell(newGrid,x,y);  
         }
@@ -80,11 +126,17 @@ function Board() {
 
             //valid nieghbour checks=>
             if(surrX >=0 && surrY >=0 
-                && surrX < ROW && surrY < COL 
+                && surrX < gameLevel.ROW && surrY < gameLevel.COL 
                 && arr[surrX][surrY].value!=="X"
                 && !arr[surrX][surrY].revealed ){
+                    
+                arr[x][y].revealed=true;
+
+                //since its been revealed ,definitely not a mine 
+                arr[x][y].flagged=false;
+                setNoOfFlags(noOfFlags+1);
                 
-                //for each neighbour
+                //Now for each neighbour
                 // +---+---+---+
                 // | * | * | * |
                 // +---+---+---+
@@ -94,17 +146,25 @@ function Board() {
                 // +---+---+---+
                 //Recursive Call to Reveal them
 
-                arr[x][y].revealed=true;
                 return revealCell(arr,surrX,surrY);
             }
         });
     }
 
-    //LOADING 
+    //VISUALS
+
+    //loading
     if(!grid) 
         return(<div>Loading</div>);
 
     return(
+    <div>
+    <ScoreCard flagsLeft={noOfFlags} />
+    <select className="dropdown-menu" value="medium">
+        <option className="dropdown-item" value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+    </select>
     <BorderWrapper>
     <div>
         {grid.map((row,r) =>{
@@ -121,7 +181,7 @@ function Board() {
             </div>);
         })}
         </div> 
-    </BorderWrapper>);
+    </BorderWrapper></div>);
 }
 
 export default Board;
