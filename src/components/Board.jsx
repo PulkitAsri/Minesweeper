@@ -5,6 +5,7 @@ import BorderWrapper from "./BorderWrapper"
 import _ from "lodash";
 
 import ScoreCard from './ScoreCard';
+import StyledSelector from './StyledSelector';
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const LEVELS={
@@ -39,7 +40,7 @@ function Board() {
 
     },[gameLevel]);
 
-//TASK==> change state when selector changes ==> test ==> try to seperate out Select => Styling
+//TASK==> try to seperate out Select => Styling
 
     
     //NEW BOARD
@@ -161,15 +162,10 @@ function Board() {
     return(
     <div>
     <ScoreCard flagsLeft={noOfFlags} />
-    <select 
-
-    defaultValue="medium"
-    onChange={handleChangeLevel}
-    >
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-    </select>
+    <StyledSelector 
+        handleChangeLevel={handleChangeLevel} 
+        defaultValue="medium" />
+    
     <BorderWrapper>
     <div>
         {grid.map((row,r) =>{
