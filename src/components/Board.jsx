@@ -27,12 +27,16 @@ const LEVELS={
 }
 
 
-
 function Board() {
     const [grid,setGrid]= useState([]);
     const [mineLoctions,setMineLocations]= useState([]);
-    const [gameLevel,setGameLevel]=useState(LEVELS.MEDIUM);
-    const [noOfFlags,setNoOfFlags]=useState(gameLevel.BOMBS);
+    const [gameLevel,setGameLevel]= useState(LEVELS.MEDIUM);
+    const [noOfFlags,setNoOfFlags]= useState(gameLevel.BOMBS);
+    const [noOfCellsLeft,setNoOfCellsLeft]= useState((gameLevel.COL*gameLevel.ROW) - gameLevel.BOMBS);
+    const [gameOverState,setGameOverState]= useState({
+        gameOver:false,
+        win:false
+    })
     
     //Whenever GameLevel Changes
     useEffect(()=>{
@@ -40,7 +44,20 @@ function Board() {
 
     },[gameLevel]);
 
-//TASK==> try to seperate out Select => Styling
+    //Whenever noOfCellsLeft Changes
+    useEffect(()=>{
+        if(noOfCellsLeft===0) 
+            setGameOverState({ gameOver:true, win:true });
+
+    },[noOfCellsLeft]);
+
+    //Whenever GameOverState Changes
+    useEffect(()=>{
+        
+
+    },[gameOverState]);
+
+//TASK   => Styling of selectors
 
     
     //NEW BOARD
@@ -48,10 +65,11 @@ function Board() {
         const newBoard=createBoard(gameLevel.ROW,gameLevel.COL,gameLevel.BOMBS);
         setMineLocations(newBoard.mineLocations);
         setNoOfFlags(gameLevel.BOMBS);
+        setNoOfCellsLeft((gameLevel.COL*gameLevel.ROW) - gameLevel.BOMBS);
+
         setGrid(newBoard.board);
         // printGrid(newBoard.board,gameLevel.ROW,gameLevel.COL);
     }
-
     //OPERATIONS
 
     //Right Click
@@ -60,9 +78,9 @@ function Board() {
 
         let newGrid=[...grid]; //deep copy
         if(newGrid[x][y].flagged){
-            setNoOfFlags(noOfFlags+1);
+            setNoOfFlags((prev)=>prev+1);
         }else{
-            setNoOfFlags(noOfFlags-1);
+            setNoOfFlags((prev)=>prev-1);
         }
         newGrid[x][y].flagged=!newGrid[x][y].flagged;
         setGrid(newGrid);
@@ -71,24 +89,27 @@ function Board() {
 
     //Left Click
     const handleRevealCell = (x,y) =>{
+
         let newGrid=[...grid]; //deep copy
 
         //avoid the click on flagged cells
         if(newGrid[x][y].flagged){ 
             newGrid[x][y].flagged=false;
-            setNoOfFlags(noOfFlags+1);
-
+            setNoOfFlags((prev)=>prev+1);
         }else{
            revealCell(newGrid,x,y);  
         }
-
         setGrid(newGrid);
     }
 
     const revealCell = (arr,x,y) =>{
-        
         if(arr[x][y].revealed === true) return;
-        else arr[x][y].revealed=true;
+
+        // Now Consider it revealed here
+        arr[x][y].revealed=true;
+
+        if(arr[x][y].value !== "X")
+            setNoOfCellsLeft((prev)=>prev-1);//Coz of last cell as a mine 
 
         //since it has been revealed, definitely not a mine 
         //update the flag counter
@@ -99,7 +120,7 @@ function Board() {
 
         //Empty Cell (Khokla)=>
         if(grid[x][y].value === 0){
-            return floodReveal(arr,x,y) ;
+            return floodReveal(arr,x,y) ;//call for neighbours
         }
 
         //BOOM
@@ -108,10 +129,14 @@ function Board() {
             for(let m=0 ; m<mineLoctions.length ; m++){
                 arr[mineLoctions[m][0]][mineLoctions[m][1]].revealed=true;
             }
+            //GAME OVER
+            setGameOverState((prev)=>({...prev,gameOver:true}));
+        }else{
+            setNoOfCellsLeft((prev)=>prev-1);//Only update nonMine cells
         }
+
         return arr;
     }
-
 
     const floodReveal= (arr,x,y) =>{
         VECTORS.forEach((v)=>{
@@ -162,6 +187,8 @@ function Board() {
     return(
     <div>
     <ScoreCard flagsLeft={noOfFlags} />
+    <ScoreCard flagsLeft={noOfCellsLeft}/>
+    {console.log(gameOverState)}
     <StyledSelector 
         handleChangeLevel={handleChangeLevel} 
         defaultValue="medium" />
@@ -182,7 +209,8 @@ function Board() {
             </div>);
         })}
         </div> 
-    </BorderWrapper></div>);
+    </BorderWrapper>
+    </div>);
 }
 
 export default Board;
