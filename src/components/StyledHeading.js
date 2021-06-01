@@ -7,4 +7,5 @@ export default styled.h1`
     color: white;
     font-family: 'Chela One', cursive;
     font-size: 2.5rem;
+    padding:20px;
 `;

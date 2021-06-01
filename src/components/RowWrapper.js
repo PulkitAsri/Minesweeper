@@ -1,7 +1,7 @@
 import styled from 'styled-components' 
 
 export default styled.div`
-    display:flex;
-    justify-content: center;
+    display: flex;
+    flex-direction:row;
     align-items: center;
 `;

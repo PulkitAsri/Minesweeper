@@ -1,11 +1,13 @@
 import React ,{ useState,useEffect }from 'react'
 import createBoard from '../util/createBoard';
 import Cell from './Cell';
-import BorderWrapper from "./BorderWrapper"
+import BoardWrapper from "./BoardWrapper"
 import _ from "lodash";
 
 import ScoreCard from './ScoreCard';
 import StyledSelector from './StyledSelector';
+import GameOverModel from './GameOverModel';
+import RowWrapper from './RowWrapper';
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const LEVELS={
@@ -66,7 +68,10 @@ function Board() {
         setMineLocations(newBoard.mineLocations);
         setNoOfFlags(gameLevel.BOMBS);
         setNoOfCellsLeft((gameLevel.COL*gameLevel.ROW) - gameLevel.BOMBS);
-
+        setGameOverState({
+            gameOver:false,
+            win:false
+        });
         setGrid(newBoard.board);
         // printGrid(newBoard.board,gameLevel.ROW,gameLevel.COL);
     }
@@ -188,16 +193,16 @@ function Board() {
     <div>
     <ScoreCard flagsLeft={noOfFlags} />
     <ScoreCard flagsLeft={noOfCellsLeft}/>
-    {console.log(gameOverState)}
     <StyledSelector 
         handleChangeLevel={handleChangeLevel} 
         defaultValue="medium" />
     
-    <BorderWrapper>
-    <div>
+        
+        <BoardWrapper>
+        {gameOverState.gameOver&&!gameOverState.win&& <GameOverModel tryAgainClicked={freshBoard} />}
         {grid.map((row,r) =>{
             return(
-            <div style={{display:"flex"}} key={r} >
+            <RowWrapper key={r} >
             {row.map((cell,c)=>{
                 return(<Cell 
                         key={c} 
@@ -206,10 +211,10 @@ function Board() {
                         updateFlag={handleUpdateFlag} />);
                 })
             }
-            </div>);
+            </RowWrapper>);
         })}
-        </div> 
-    </BorderWrapper>
+
+    </BoardWrapper>
     </div>);
 }
 
