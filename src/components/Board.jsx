@@ -87,7 +87,14 @@ function Board() {
     const revealCell = (arr,x,y) =>{
         
         if(arr[x][y].revealed === true) return;
-        arr[x][y].revealed=true;
+        else arr[x][y].revealed=true;
+
+        //since it has been revealed, definitely not a mine 
+        //update the flag counter
+        if(arr[x][y].flagged){
+            arr[x][y].flagged=false;
+            setNoOfFlags((prev)=>prev+1);
+        }
 
         //Empty Cell (Khokla)=>
         if(grid[x][y].value === 0){
@@ -115,16 +122,6 @@ function Board() {
                 && surrX < gameLevel.ROW && surrY < gameLevel.COL 
                 && arr[surrX][surrY].value!=="X"
                 && !arr[surrX][surrY].revealed ){
-                    
-                arr[x][y].revealed=true;
-
-                //since its been revealed ,definitely not a mine 
-                if(arr[x][y].flagged){
-                    arr[x][y].flagged=false;
-                    setNoOfFlags(noOfFlags+1);
-                }
-                
-                
                 //Now for each neighbour
                 // +---+---+---+
                 // | * | * | * |
@@ -156,14 +153,14 @@ function Board() {
 
     //VISUALS
 
-    //loading
+    //Loading
     if(!grid) 
         return(<div>Loading</div>);
-
+    
+    //Loaded
     return(
     <div>
     <ScoreCard flagsLeft={noOfFlags} />
-    {console.log(gameLevel)}
     <select 
 
     defaultValue="medium"
