@@ -6,14 +6,12 @@ import _ from "lodash";
 
 import ScoreCard from './ScoreCard';
 
-
-
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const LEVELS={
     EASY:{
-        ROW:10,
-        COL:10,
-        BOMBS:20
+        ROW:5,
+        COL:5,
+        BOMBS:5
     },
     MEDIUM:{
         ROW:12,
@@ -26,34 +24,22 @@ const LEVELS={
         BOMBS:40
     }
 }
-// const ROW=15;
-// const COL=20;
-// const BOMBS=40;
+
+
 
 function Board() {
     const [grid,setGrid]= useState([]);
     const [mineLoctions,setMineLocations]= useState([]);
-    const [gameLevel,setGameLevel]=useState({
-        ROW:10,
-        COL:10,
-        BOMBS:20
-    })
+    const [gameLevel,setGameLevel]=useState(LEVELS.MEDIUM);
     const [noOfFlags,setNoOfFlags]=useState(gameLevel.BOMBS);
-
-    //FIRST MOUNT
-    useEffect(() => {
-        freshBoard();
-        
-    }, []);
-
+    
     //Whenever GameLevel Changes
     useEffect(()=>{
         freshBoard();
 
     },[gameLevel]);
 
-
-
+//TASK==> change state when selector changes ==> test ==> try to seperate out Select => Styling
 
     
     //NEW BOARD
@@ -133,8 +119,11 @@ function Board() {
                 arr[x][y].revealed=true;
 
                 //since its been revealed ,definitely not a mine 
-                arr[x][y].flagged=false;
-                setNoOfFlags(noOfFlags+1);
+                if(arr[x][y].flagged){
+                    arr[x][y].flagged=false;
+                    setNoOfFlags(noOfFlags+1);
+                }
+                
                 
                 //Now for each neighbour
                 // +---+---+---+
@@ -151,6 +140,20 @@ function Board() {
         });
     }
 
+    const handleChangeLevel=(e)=>{
+        switch(e.target.value){
+            case "easy": 
+                setGameLevel(LEVELS.EASY);
+                break;
+            case "medium":
+                setGameLevel(LEVELS.MEDIUM);
+                break;
+            case "hard":
+                setGameLevel(LEVELS.HARD);
+                break;
+        }
+    }
+
     //VISUALS
 
     //loading
@@ -160,8 +163,13 @@ function Board() {
     return(
     <div>
     <ScoreCard flagsLeft={noOfFlags} />
-    <select className="dropdown-menu" value="medium">
-        <option className="dropdown-item" value="easy">Easy</option>
+    {console.log(gameLevel)}
+    <select 
+
+    defaultValue="medium"
+    onChange={handleChangeLevel}
+    >
+        <option value="easy">Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
     </select>
