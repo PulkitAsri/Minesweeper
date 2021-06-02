@@ -1,13 +1,14 @@
 import React ,{ useState,useEffect }from 'react'
 import createBoard from '../util/createBoard';
 import Cell from './Cell';
-import BoardWrapper from "./BoardWrapper"
+import GridWrapper from "./GridWrapper"
 import _ from "lodash";
 
 import ScoreCard from './ScoreCard';
 import StyledSelector from './StyledSelector';
 import GameOverModel from './GameOverModel';
 import RowWrapper from './RowWrapper';
+import StyledBoard from './StyledBoard';
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const LEVELS={
@@ -19,7 +20,7 @@ const LEVELS={
     MEDIUM:{
         ROW:12,
         COL:12,
-        BOMBS:30
+        BOMBS:25
     },
     HARD:{
         ROW:15,
@@ -59,10 +60,14 @@ function Board() {
 
     },[gameOverState]);
 
-//TASK   => Styling of selectors
-
+//TASK
+// ==> Styling of selectors 
+// ==>Timer
+// ==>timer wit 000 type
+// ==> styling Model(Bootstrap maybe ) 
+// ==> You Win Model
     
-    //NEW BOARD
+    //  NEW BOARD
     const freshBoard = () => {
         const newBoard=createBoard(gameLevel.ROW,gameLevel.COL,gameLevel.BOMBS);
         setMineLocations(newBoard.mineLocations);
@@ -136,8 +141,6 @@ function Board() {
             }
             //GAME OVER
             setGameOverState((prev)=>({...prev,gameOver:true}));
-        }else{
-            setNoOfCellsLeft((prev)=>prev-1);//Only update nonMine cells
         }
 
         return arr;
@@ -190,16 +193,14 @@ function Board() {
     
     //Loaded
     return(
-    <div>
-    <ScoreCard flagsLeft={noOfFlags} />
-    <ScoreCard flagsLeft={noOfCellsLeft}/>
-    <StyledSelector 
-        handleChangeLevel={handleChangeLevel} 
-        defaultValue="medium" />
-    
-        
-        <BoardWrapper>
-        {gameOverState.gameOver&&!gameOverState.win&& <GameOverModel tryAgainClicked={freshBoard} />}
+    <StyledBoard>
+        <ScoreCard flagsLeft={noOfFlags} />
+        <StyledSelector 
+            handleChangeLevel={handleChangeLevel} 
+            defaultValue="medium" />
+         
+        <GridWrapper>
+        {gameOverState.gameOver && <GameOverModel win ={gameOverState.win} tryAgainClicked={freshBoard} />}
         {grid.map((row,r) =>{
             return(
             <RowWrapper key={r} >
@@ -212,10 +213,13 @@ function Board() {
                 })
             }
             </RowWrapper>);
-        })}
-
-    </BoardWrapper>
-    </div>);
+        })
+        }
+        <button style ={{ margin:20,display:'flex'}}className="btn btn-primary" onClick={freshBoard}>Reset</button>
+        </GridWrapper>
+        
+    </StyledBoard>
+    );
 }
 
 export default Board;

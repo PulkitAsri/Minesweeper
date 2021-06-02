@@ -6,20 +6,16 @@ const style={
     flexDirection:"column",
     justifyContent:"center",
     alignItems:"center",
-    background:"black",
-    borderRadius:10,
-    position:"absolute",
-    color:"white"}
+    position:"absolute"}
 
 function GameOverModel(props) {
     return (
-        <div style={style}>
-            <StyledHeading>
-                GameOver
-            </StyledHeading>
-            <button onClick={props.tryAgainClicked}style ={{margin:10,background:"maroon",borderRadius:10}}>Try Again</button>
+        <div style={style} className=" p-4 card">
+            <h1>{props.win?"WUHHOOO YOU WON !":"Oops! 🧨 BOOM 🧨"}</h1>
+            <button className="p-1 btn btn-lg btn-danger " onClick={props.tryAgainClicked} >{props.win?"Play Again":"Try Again"}</button>
         </div>
     )
 }
 
 export default GameOverModel
+// style ={{margin:10,background:"maroon",borderRadius:10}}

@@ -1,3 +1,17 @@
-html{
+body{
     background-color: black;
 }
+select {
+    border: 0 none;
+    color: #FFFFFF;
+    background: transparent;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 2px 10px;
+    width: 378px;
+
+   
+  }
+  
+
+  
