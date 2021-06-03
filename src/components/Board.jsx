@@ -1,21 +1,27 @@
 import React ,{ useState,useEffect }from 'react'
-import createBoard from '../util/createBoard';
-import Cell from './Cell';
-import GridWrapper from "./GridWrapper"
 import _ from "lodash";
 
+import useSound from 'use-sound';
+import revealSfx from "../sounds/reveal.wav"
+import flagSfx from "../sounds/flag.wav"
+import boomSfx from "../sounds/boom.wav"
+
+import createBoard from '../util/createBoard';
+import GameOverModel from './GameOverModel';
 import ScoreCard from './ScoreCard';
 import StyledSelector from './StyledSelector';
-import GameOverModel from './GameOverModel';
+import Cell from './Cell';
+
+import GridWrapper from "./GridWrapper"
 import RowWrapper from './RowWrapper';
 import StyledBoard from './StyledBoard';
 
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const LEVELS={
     EASY:{
-        ROW:5,
-        COL:5,
-        BOMBS:5
+        ROW:9,
+        COL:9,
+        BOMBS:20
     },
     MEDIUM:{
         ROW:12,
@@ -40,6 +46,10 @@ function Board() {
         gameOver:false,
         win:false
     })
+    
+    const [playFlagged] = useSound(flagSfx);
+    const [playRevealed] = useSound(revealSfx);
+    const [playBoom] = useSound(boomSfx);
     
     //Whenever GameLevel Changes
     useEffect(()=>{
@@ -66,7 +76,7 @@ function Board() {
 // ==>timer wit 000 type
 // ==> styling Model(Bootstrap maybe ) 
 // ==> You Win Model
-    
+
     //  NEW BOARD
     const freshBoard = () => {
         const newBoard=createBoard(gameLevel.ROW,gameLevel.COL,gameLevel.BOMBS);
@@ -87,10 +97,13 @@ function Board() {
         e.preventDefault(); //avoiding menu 
 
         let newGrid=[...grid]; //deep copy
+
+        
         if(newGrid[x][y].flagged){
             setNoOfFlags((prev)=>prev+1);
         }else{
             setNoOfFlags((prev)=>prev-1);
+            playFlagged();
         }
         newGrid[x][y].flagged=!newGrid[x][y].flagged;
         setGrid(newGrid);
@@ -102,12 +115,14 @@ function Board() {
 
         let newGrid=[...grid]; //deep copy
 
+
         //avoid the click on flagged cells
         if(newGrid[x][y].flagged){ 
             newGrid[x][y].flagged=false;
             setNoOfFlags((prev)=>prev+1);
         }else{
-           revealCell(newGrid,x,y);  
+           revealCell(newGrid,x,y); 
+           playRevealed(); 
         }
         setGrid(newGrid);
     }
@@ -117,6 +132,8 @@ function Board() {
 
         // Now Consider it revealed here
         arr[x][y].revealed=true;
+        
+
 
         if(arr[x][y].value !== "X")
             setNoOfCellsLeft((prev)=>prev-1);//Coz of last cell as a mine 
@@ -136,6 +153,7 @@ function Board() {
         //BOOM
         if(arr[x][y].value === "X") {
             //Reveal all mines
+            playBoom();
             for(let m=0 ; m<mineLoctions.length ; m++){
                 arr[mineLoctions[m][0]][mineLoctions[m][1]].revealed=true;
             }
