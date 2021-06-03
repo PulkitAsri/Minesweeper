@@ -32,7 +32,7 @@ const LEVELS={
     HARD:{
         ROW:20,
         COL:24,
-        BOMBS:99
+        BOMBS:80
     }
 }
 
