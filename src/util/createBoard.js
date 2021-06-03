@@ -1,6 +1,6 @@
 import {printBoard} from "./debugging";
 
-export default (row,col,bombs)=>{
+export default ({ROW:row,COL:col,BOMBS:bombs})=>{
     const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
     let board=[];
     let mineLocations=[];

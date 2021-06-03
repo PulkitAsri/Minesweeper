@@ -19,19 +19,19 @@ import StyledBoard from './StyledBoard';
 const VECTORS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const LEVELS={
     EASY:{
-        ROW:9,
-        COL:9,
-        BOMBS:20
+        ROW:8,
+        COL:10,
+        BOMBS:10
     },
     MEDIUM:{
-        ROW:12,
-        COL:12,
-        BOMBS:25
+        ROW:14,
+        COL:18,
+        BOMBS:40
     },
     HARD:{
-        ROW:15,
-        COL:15,
-        BOMBS:40
+        ROW:20,
+        COL:24,
+        BOMBS:99
     }
 }
 
@@ -79,7 +79,7 @@ function Board() {
 
     //  NEW BOARD
     const freshBoard = () => {
-        const newBoard=createBoard(gameLevel.ROW,gameLevel.COL,gameLevel.BOMBS);
+        const newBoard=createBoard(gameLevel);
         setMineLocations(newBoard.mineLocations);
         setNoOfFlags(gameLevel.BOMBS);
         setNoOfCellsLeft((gameLevel.COL*gameLevel.ROW) - gameLevel.BOMBS);
@@ -225,7 +225,8 @@ function Board() {
             {row.map((cell,c)=>{
                 return(<Cell 
                         key={c} 
-                        info={cell} 
+                        info={cell}
+                        gameLevel={gameLevel}
                         handleRevealCell={handleRevealCell} 
                         updateFlag={handleUpdateFlag} />);
                 })
