@@ -1,21 +1,37 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import StyledHeading from "./StyledHeading"
 
-const style={
-    display:"flex",
-    flexDirection:"column",
-    justifyContent:"center",
-    alignItems:"center",
-    position:"absolute",
-    width: "21rem",
-    height:"21rem"
-}
+
 
 function GameOverModel(props) {
+    
+
+    const style={
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center",
+        alignItems:"center",
+        position:"absolute",
+        width: 300,
+        height:240
+    }
+
     return (
-        <div style={style} className="p-4 card">
-            <h1 >{props.win?"🎊🎉WUHHOO🎉🎊":"💢Oops!💢"}</h1>
-            <button className="p-1 btn btn-lg btn-danger " onClick={props.tryAgainClicked} >{props.win?"Play Again":"Try Again"}</button>
+        <div style={style} className="p-2 card">
+            <div>
+                <h3 
+                className="p-4" >
+                {props.win?"🎊🎉WUHHOO🎉🎊":"💢Oops!💢"}
+                </h3>
+                <div class="col-md-12 text-center">
+                    <button 
+                    className="p-1 btn btn-lg btn-danger " 
+                    onClick={props.tryAgainClicked} 
+                    >
+                    {props.win?"Play Again":"Try Again"}
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }

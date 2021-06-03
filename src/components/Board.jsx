@@ -238,9 +238,10 @@ function Board() {
             </RowWrapper>);
         })
         }
-        <button style ={{ margin:20,display:'flex'}}className="btn btn-primary" onClick={freshBoard}>Reset</button>
         </GridWrapper>
-        
+        <div class="col-md-12 text-center">
+        <button style ={{ margin:20}} className="btn btn-primary btn-lg" onClick={freshBoard}>Reset</button>
+        </div>
     </StyledBoard>
     );
 }
