@@ -5,6 +5,7 @@ import useSound from 'use-sound';
 import revealSfx from "../sounds/reveal.wav"
 import flagSfx from "../sounds/flag.wav"
 import boomSfx from "../sounds/boom.wav"
+import winSfx from "../sounds/win.wav"
 
 import createBoard from '../util/createBoard';
 import GameOverModel from './GameOverModel';
@@ -50,6 +51,7 @@ function Board() {
     const [playFlagged] = useSound(flagSfx);
     const [playRevealed] = useSound(revealSfx);
     const [playBoom] = useSound(boomSfx);
+    const [playWin] = useSound(winSfx);
     
     //Whenever GameLevel Changes
     useEffect(()=>{
@@ -59,8 +61,10 @@ function Board() {
 
     //Whenever noOfCellsLeft Changes
     useEffect(()=>{
-        if(noOfCellsLeft===0) 
+        if(noOfCellsLeft===0){ 
             setGameOverState({ gameOver:true, win:true });
+            playWin();
+        }
 
     },[noOfCellsLeft]);
 

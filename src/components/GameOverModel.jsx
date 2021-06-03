@@ -7,13 +7,14 @@ const style={
     justifyContent:"center",
     alignItems:"center",
     position:"absolute",
-    width: "20rem"
+    width: "21rem",
+    height:"21rem"
 }
 
 function GameOverModel(props) {
     return (
-        <div style={style} className=" p-4 card">
-            <h1 className="p-4">{props.win?"🎊🎉🎊🎉🎊 WUHHOO 🎉🎊🎉🎊🎉":"💢Oops!💢"}</h1>
+        <div style={style} className="p-4 card">
+            <h1 >{props.win?"🎊🎉WUHHOO🎉🎊":"💢Oops!💢"}</h1>
             <button className="p-1 btn btn-lg btn-danger " onClick={props.tryAgainClicked} >{props.win?"Play Again":"Try Again"}</button>
         </div>
     )
