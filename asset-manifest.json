@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.js": "/Minesweeper/static/js/main.cda38cba.chunk.js",
+    "main.js.map": "/Minesweeper/static/js/main.cda38cba.chunk.js.map",
+    "runtime-main.js": "/Minesweeper/static/js/runtime-main.adf6ef76.js",
+    "runtime-main.js.map": "/Minesweeper/static/js/runtime-main.adf6ef76.js.map",
+    "static/js/2.dba3af7e.chunk.js": "/Minesweeper/static/js/2.dba3af7e.chunk.js",
+    "static/js/2.dba3af7e.chunk.js.map": "/Minesweeper/static/js/2.dba3af7e.chunk.js.map",
+    "static/js/3.8ad28ebe.chunk.js": "/Minesweeper/static/js/3.8ad28ebe.chunk.js",
+    "static/js/3.8ad28ebe.chunk.js.map": "/Minesweeper/static/js/3.8ad28ebe.chunk.js.map",
+    "index.html": "/Minesweeper/index.html",
+    "static/js/2.dba3af7e.chunk.js.LICENSE.txt": "/Minesweeper/static/js/2.dba3af7e.chunk.js.LICENSE.txt",
+    "static/js/3.8ad28ebe.chunk.js.LICENSE.txt": "/Minesweeper/static/js/3.8ad28ebe.chunk.js.LICENSE.txt",
+    "static/media/boom.89a0ee30.wav": "/Minesweeper/static/media/boom.89a0ee30.wav",
+    "static/media/flag.1b1743f7.wav": "/Minesweeper/static/media/flag.1b1743f7.wav",
+    "static/media/reveal.ae2de8e7.wav": "/Minesweeper/static/media/reveal.ae2de8e7.wav",
+    "static/media/win.abeb4707.wav": "/Minesweeper/static/media/win.abeb4707.wav"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.adf6ef76.js",
+    "static/js/2.dba3af7e.chunk.js",
+    "static/js/main.cda38cba.chunk.js"
+  ]
+}
