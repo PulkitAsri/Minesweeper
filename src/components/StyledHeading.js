@@ -8,4 +8,6 @@ export default styled.h1`
     font-family: 'Chela One', cursive;
     font-size: 2.5rem;
     padding:20px;
+    background-color:black;
+    margin-bottom: 0;
 `;
