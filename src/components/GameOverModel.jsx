@@ -21,7 +21,7 @@ function GameOverModel(props) {
             <div>
                 <h3 
                 className="p-4" >
-                {props.win?"🎊🎉WUHHOO🎉🎊":"💢Oops!💢"}
+                {props.win?"🎉Winner🎉":"💢Oops!💢"}
                 </h3>
                 <div class="col-md-12 text-center">
                     <button 

@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 
 import leftClick from "../Images/mouseLeftClick.png";
 import rightClick from "../Images/mouseRightClick.png";
+import mineTutorialPic from "../Images/mineTutorialPic.png";
 
 
 
@@ -18,7 +19,7 @@ const HtmlTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: '#f5f5f9',
       color: 'rgba(0, 0, 0, 0.87)',
-      maxWidth: 220,
+      maxWidth: 250,
       fontSize: theme.typography.pxToRem(12),
       border: '1px solid #dadde9',
     },
@@ -27,7 +28,9 @@ const HtmlTooltip = withStyles((theme) => ({
   const InstructionCard = withStyles((theme) => ({
       card:{
         padding: 20,
-        textAlign: 'center',
+        display:'flex',
+        alignItems : 'center',
+        justifyContent:"center",
         color: theme.palette.text.secondary,
     },
   }))(Card);
@@ -38,6 +41,7 @@ const HtmlTooltip = withStyles((theme) => ({
 function StyledSelector(props) {
     return (
         <div style={{display:"flex",alignItems:'center',justifyContent:"center",padding:20}}>
+            {/* LEVEL SELECTOR */}
             <div>
                 <select
                     defaultValue={props.defaultValue}
@@ -48,6 +52,9 @@ function StyledSelector(props) {
                     <option value="hard">Hard</option>
                 </select>
             </div>
+
+
+            {/* HELP ICON */}
             <div>
                 <HtmlTooltip
                     title={
@@ -57,9 +64,9 @@ function StyledSelector(props) {
                             <Grid
                                 container
                                 direction="row"
-                                justify="flex-start"
+                                justify="flex"
                                 alignItems="center"
-                                style={{padding:20}}
+                                style={{padding:0}}
                             >
                             
                             <InstructionCard  square>
@@ -77,6 +84,31 @@ function StyledSelector(props) {
                             
 
                         </Grid>
+                        </div>
+
+                    </React.Fragment>
+                    }
+                >
+                    <Button><Help color="secondary" fontSize="large" /></Button>
+                </HtmlTooltip>
+            </div>
+
+            {/* HOW TO PLAY */}
+            <div>
+                <HtmlTooltip
+                    title={
+                    <React.Fragment >
+                        <Typography  variant="h5" color="inherit">Rules:</Typography>
+                        <div >
+
+                            <InstructionCard  square>
+                            <img  style={{width:100}} src={mineTutorialPic}/>
+                            <Typography style={{padding:20}} color="inherit">{"Each number N means that their are N number of bombs💣 in the surrounding cells ! BE CAREFUL !"}</Typography>
+                            <Typography style={{padding:20}} color="inherit">{"Start by Randomly Revealing cells and try to Flag⛳️ All the Mines!"}</Typography>
+                            <Typography style={{padding:20}} color="inherit">{"WHAT ARE YOU WAITING FOR !"}</Typography>
+
+                            </InstructionCard>
+                        
                         </div>
 
                     </React.Fragment>
