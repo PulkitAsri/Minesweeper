@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.js": "/Minesweeper/static/js/main.ae5b6458.chunk.js",
-    "main.js.map": "/Minesweeper/static/js/main.ae5b6458.chunk.js.map",
-    "runtime-main.js": "/Minesweeper/static/js/runtime-main.9d75ca99.js",
-    "runtime-main.js.map": "/Minesweeper/static/js/runtime-main.9d75ca99.js.map",
-    "static/js/2.d013968d.chunk.js": "/Minesweeper/static/js/2.d013968d.chunk.js",
-    "static/js/2.d013968d.chunk.js.map": "/Minesweeper/static/js/2.d013968d.chunk.js.map",
-    "static/js/3.593e2eb8.chunk.js": "/Minesweeper/static/js/3.593e2eb8.chunk.js",
-    "static/js/3.593e2eb8.chunk.js.map": "/Minesweeper/static/js/3.593e2eb8.chunk.js.map",
+    "main.js": "/Minesweeper/static/js/main.00668d4a.chunk.js",
+    "main.js.map": "/Minesweeper/static/js/main.00668d4a.chunk.js.map",
+    "runtime-main.js": "/Minesweeper/static/js/runtime-main.88f61c00.js",
+    "runtime-main.js.map": "/Minesweeper/static/js/runtime-main.88f61c00.js.map",
+    "static/js/2.343051f6.chunk.js": "/Minesweeper/static/js/2.343051f6.chunk.js",
+    "static/js/2.343051f6.chunk.js.map": "/Minesweeper/static/js/2.343051f6.chunk.js.map",
+    "static/js/3.7148e3a9.chunk.js": "/Minesweeper/static/js/3.7148e3a9.chunk.js",
+    "static/js/3.7148e3a9.chunk.js.map": "/Minesweeper/static/js/3.7148e3a9.chunk.js.map",
     "index.html": "/Minesweeper/index.html",
-    "static/js/2.d013968d.chunk.js.LICENSE.txt": "/Minesweeper/static/js/2.d013968d.chunk.js.LICENSE.txt",
-    "static/js/3.593e2eb8.chunk.js.LICENSE.txt": "/Minesweeper/static/js/3.593e2eb8.chunk.js.LICENSE.txt",
+    "static/js/2.343051f6.chunk.js.LICENSE.txt": "/Minesweeper/static/js/2.343051f6.chunk.js.LICENSE.txt",
+    "static/js/3.7148e3a9.chunk.js.LICENSE.txt": "/Minesweeper/static/js/3.7148e3a9.chunk.js.LICENSE.txt",
     "static/media/boom.89a0ee30.wav": "/Minesweeper/static/media/boom.89a0ee30.wav",
     "static/media/flag.1b1743f7.wav": "/Minesweeper/static/media/flag.1b1743f7.wav",
     "static/media/mouseRightClick.1356be6e.png": "/Minesweeper/static/media/mouseRightClick.1356be6e.png",
@@ -18,8 +18,8 @@
     "static/media/win.abeb4707.wav": "/Minesweeper/static/media/win.abeb4707.wav"
   },
   "entrypoints": [
-    "static/js/runtime-main.9d75ca99.js",
-    "static/js/2.d013968d.chunk.js",
-    "static/js/main.ae5b6458.chunk.js"
+    "static/js/runtime-main.88f61c00.js",
+    "static/js/2.343051f6.chunk.js",
+    "static/js/main.00668d4a.chunk.js"
   ]
 }
