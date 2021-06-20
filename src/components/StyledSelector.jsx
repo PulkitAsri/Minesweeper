@@ -14,6 +14,7 @@ import mineTutorialPic from "../Images/mineTutorialPic.png";
 
 import { Help } from '@material-ui/icons';
 import { Card } from '@material-ui/core';
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
 const HtmlTooltip = withStyles((theme) => ({
     tooltip: {
@@ -114,7 +115,7 @@ function StyledSelector(props) {
                     </React.Fragment>
                     }
                 >
-                    <Button><Help color="secondary" fontSize="large" /></Button>
+                    <Button><BubbleChartIcon color="secondary" fontSize="large" /></Button>
                 </HtmlTooltip>
             </div>
         </div>
