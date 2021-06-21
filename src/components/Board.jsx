@@ -38,6 +38,10 @@ const LEVELS={
 
 
 function Board() {
+    const [WindowWidth, setWindowWidth] = React.useState(window.innerWidth);
+
+    const [cellSize,setCellSize]=useState(30);
+
     const [grid,setGrid]= useState([]);
     const [mineLoctions,setMineLocations]= useState([]);
     const [gameLevel,setGameLevel]= useState(LEVELS.MEDIUM);
@@ -74,6 +78,25 @@ function Board() {
 
     },[gameOverState]);
 
+    
+    React.useEffect(() => {
+        const updateWidth = () => {
+
+            const w=window.innerWidth
+            setWindowWidth(w);
+            if(w >1000) setCellSize(30);
+            else if(w < 1000){
+                setCellSize(3*w/100);
+            }
+
+            console.log(w+" "+cellSize);
+        }
+
+        window.addEventListener("resize", updateWidth);
+        return () => window.removeEventListener("resize", updateWidth);
+    });
+
+    
 //TASK
 // ==> Styling of selectors 
 // ==>Timer
@@ -232,7 +255,8 @@ function Board() {
                         info={cell}
                         gameLevel={gameLevel}
                         handleRevealCell={handleRevealCell} 
-                        updateFlag={handleUpdateFlag} />);
+                        updateFlag={handleUpdateFlag}
+                        cellSize={cellSize} />);
                 })
             }
             </RowWrapper>);

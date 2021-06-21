@@ -5,10 +5,12 @@ import StyledCell from './StyledCell'
 
 
 
-function Cell({info,updateFlag,handleRevealCell,gameLevel}) {
+function Cell({info,updateFlag,handleRevealCell,gameLevel,cellSize}) {
     const style={
         background: info.revealed ? (info.value ==="X" ? mineColor() :"silver") :"grey",
-        color: valueColor(info.value)
+        color: valueColor(info.value),
+        width:cellSize,
+        height:cellSize
     } 
 
     return (
