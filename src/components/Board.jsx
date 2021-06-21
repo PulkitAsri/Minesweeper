@@ -22,17 +22,20 @@ const LEVELS={
     EASY:{
         ROW:8,
         COL:10,
-        BOMBS:10
+        BOMBS:10,
+        CELLSIZE:40
     },
     MEDIUM:{
         ROW:14,
         COL:18,
-        BOMBS:40
+        BOMBS:40,
+        CELLSIZE:30
     },
     HARD:{
         ROW:20,
         COL:24,
-        BOMBS:80
+        BOMBS:80,
+        CELLSIZE:25
     }
 }
 
@@ -40,11 +43,12 @@ const LEVELS={
 function Board() {
     const [WindowWidth, setWindowWidth] = React.useState(window.innerWidth);
 
-    const [cellSize,setCellSize]=useState(30);
-
+    
     const [grid,setGrid]= useState([]);
     const [mineLoctions,setMineLocations]= useState([]);
     const [gameLevel,setGameLevel]= useState(LEVELS.MEDIUM);
+    const [cellSize,setCellSize]=useState(gameLevel.CELLSIZE);
+
     const [noOfFlags,setNoOfFlags]= useState(gameLevel.BOMBS);
     const [noOfCellsLeft,setNoOfCellsLeft]= useState((gameLevel.COL*gameLevel.ROW) - gameLevel.BOMBS);
     const [gameOverState,setGameOverState]= useState({
@@ -84,9 +88,12 @@ function Board() {
 
             const w=window.innerWidth
             setWindowWidth(w);
-            if(w >1000) setCellSize(30);
-            else if(w < 1000){
-                setCellSize(3*w/100);
+
+            const thresholdWidth=(gameLevel.CELLSIZE*gameLevel.COL +100);
+            
+            if(w > thresholdWidth) setCellSize(gameLevel.CELLSIZE);
+            else {
+                setCellSize(gameLevel.CELLSIZE*w/thresholdWidth);
             }
 
             console.log(w+" "+cellSize);
@@ -107,6 +114,8 @@ function Board() {
     //  NEW BOARD
     const freshBoard = () => {
         const newBoard=createBoard(gameLevel);
+
+        setCellSize(gameLevel.CELLSIZE);
         setMineLocations(newBoard.mineLocations);
         setNoOfFlags(gameLevel.BOMBS);
         setNoOfCellsLeft((gameLevel.COL*gameLevel.ROW) - gameLevel.BOMBS);
