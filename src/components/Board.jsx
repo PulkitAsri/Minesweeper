@@ -90,13 +90,12 @@ function Board() {
             setWindowWidth(w);
 
             const thresholdWidth=(gameLevel.CELLSIZE*gameLevel.COL +100);
-            
+
             if(w > thresholdWidth) setCellSize(gameLevel.CELLSIZE);
             else {
                 setCellSize(gameLevel.CELLSIZE*w/thresholdWidth);
             }
-
-            console.log(w+" "+cellSize);
+            
         }
 
         window.addEventListener("resize", updateWidth);
