@@ -3,12 +3,15 @@ body{
 }
 select {
     border: 0 none;
-    color: #808080;
+    color: #FFFFFF;
     background: transparent;
     font-size: 20px;
     font-weight: bold;
     padding: 2px 10px;
     width: 378px;
+  }
+  option{
+      color:#808080;
   }
 
   
