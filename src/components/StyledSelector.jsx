@@ -45,6 +45,7 @@ function StyledSelector(props) {
             {/* LEVEL SELECTOR */}
             <div>
                 <select
+
                     defaultValue={props.defaultValue}
                     onChange={(e)=>props.handleChangeLevel(e)}
                 >

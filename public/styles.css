@@ -10,6 +10,9 @@ select {
     padding: 2px 10px;
     width: 378px;
   }
+  option{
+      color:#808080;
+  }
 
   
   
